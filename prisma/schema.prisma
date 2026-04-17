@@ -12,13 +12,22 @@ datasource db {
 }
 
 
-
+//---------------ueer model---------------
+enum Role {
+  SUPER_ADMIN
+  AGENT
+}
 
 
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   name      String?
+  password  String
+  role      Role     @default(AGENT)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
 }
+
+//---------------user model end---------------
