@@ -12,13 +12,11 @@ datasource db {
   provider = "postgresql"
 }
 
-
 //---------------ueer model---------------
 enum Role {
   SUPER_ADMIN
   AGENT
 }
-
 
 model User {
   id        String   @id @default(uuid())
@@ -28,7 +26,126 @@ model User {
   role      Role     @default(AGENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
 }
 
 //---------------user model end---------------
+
+model Survey {
+  // Section 1
+  id              String    @id @default(uuid())
+  userId          String
+  district        String?
+  village         String?
+  latitude        Float?
+  longitude       Float?
+  elevation       Float?
+  surveyNo        String?
+  interviewDate   DateTime?
+  interviewerName String?
+  dataEntryClerk  String?
+
+  // Section 2
+  householdType      HouseholdType?
+  ethnicity          String?
+  // 2.2 responding member
+  maleRespondentName String?
+  maleRespondentCode String?
+  maleRelationToHOH  Int?
+
+  femaleRespondentName String?
+  femaleRespondentCode String?
+  femaleRelationToHOH  Int?
+
+  // SECTION 3 - LAND
+  landUnit        String?
+  totalLandAccess Float?
+  ownedLand       Float?
+  rentedLand      Float?
+  communalLand    Float?
+
+  rainfedLand   Float?
+  irrigatedLand Float?
+  homeGarden    Float?
+  grassland     Float?
+  fallowLand    Float?
+  forestLand    Float?
+  pond          Float?
+  rentedOutLand Float?
+
+  numberOfParcels        Int?
+  distanceBetweenParcels Float?
+
+  members         HouseholdMember[]
+  crops           Crop[]
+  cropProductions CropProduction[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+//////////////////////
+// HOUSEHOLD MEMBERS
+//////////////////////
+
+enum HouseholdType {
+  MW
+  MH
+  WH
+  MA
+  FD
+  CH
+  OH
+}
+
+model HouseholdMember {
+  id             String  @id @default(uuid())
+  surveyId       String
+  memberCode     String
+  name           String?
+  gender         String
+  age            Int?
+  yearOfBirth    Int?
+  educationYears Int?
+  isEnrolled     Boolean
+  isIncomeEarner Boolean
+  farmMonths     Int?
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+//////////////////////
+// CROPS
+//////////////////////
+
+model Crop {
+  id       String @id @default(uuid())
+  surveyId String
+
+  cropName          String
+  areaPlanted       Float?
+  isConsumed        Boolean
+  isIncomeGenerated Boolean
+  inputsUsed        String?
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+//////////////////////
+// CROP PRODUCTION
+//////////////////////
+
+model CropProduction {
+  id       String @id @default(uuid())
+  surveyId String
+
+  cropName       String
+  variety        String
+  areaSown       Float?
+  yieldKg        Float?
+  seedSource     String?
+  productType    String?
+  salePercentage Float?
+  buyer          String?
+  pricePerKg     Float?
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
