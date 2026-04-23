@@ -75,11 +75,50 @@ model Survey {
   numberOfParcels        Int?
   distanceBetweenParcels Float?
 
-  members         HouseholdMember[]
-  crops           Crop[]
-  cropProductions CropProduction[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  // SECTION 4 - LIVESTOCK
+  topIncomeSource1 String?
+  topIncomeSource2 String?
+  topIncomeSource3 String?
+  topIncomeSource4 String?
+  topIncomeSource5 String?
+
+  crop1Importance Int?
+  crop2Importance Int?
+  crop3Importance Int?
+
+  // SECTION 4 - ASSETS
+  roofMaterial        Int?
+  hasThermos          Boolean?
+  floorMaterial       Int?
+  wallMaterial        Int?
+  cookingEnergy       Int?
+  hasRefrigerator     Boolean?
+  drinkingWaterSource Int?
+  hasPhone            Int?
+  hasStove            Boolean?
+  toiletType          Int?
+  hasTV               Int?
+  hasStoneMill        Boolean?
+  hasAlmirah          Boolean?
+  hasIron             Boolean?
+  hasRadio            Boolean?
+  hasSewingMachine    Boolean?
+  hasVehicle          Int?
+  hasMotorbike        Boolean?
+
+  irrigationType String?
+  hiresLabor     Boolean?
+
+  members                  HouseholdMember[]
+  crops                    Crop[]
+  cropProductions          CropProduction[]
+  processedProducts        ProcessedProduct[]
+  livestocks               Livestock[]
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  livestockProductsSold    IncomeFromLiveStock[]
+  livestockImportantOnFarm LivestockImportantOnFarm[]
+  offFarmIncome            OffFarmIncome[]
 }
 
 //////////////////////
@@ -130,6 +169,20 @@ model Crop {
 }
 
 //////////////////////
+// PROCESSED PRODUCTS
+//////////////////////
+
+model ProcessedProduct {
+  id       String @id @default(uuid())
+  surveyId String
+
+  crop    String
+  product String
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+//////////////////////
 // CROP PRODUCTION
 //////////////////////
 
@@ -137,15 +190,69 @@ model CropProduction {
   id       String @id @default(uuid())
   surveyId String
 
-  cropName       String
-  variety        String
-  areaSown       Float?
-  yieldKg        Float?
-  seedSource     String?
-  productType    String?
+  cropName   String
+  variety    String
+  areaSown   Float?
+  yieldKg    Float?
+  seedSource String?
+  valueChain ValueChain[]
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+model ValueChain {
+  id               String @id @default(uuid())
+  cropProductionId String
+
+  product        String?
   salePercentage Float?
   buyer          String?
   pricePerKg     Float?
+
+  cropProduction CropProduction @relation(fields: [cropProductionId], references: [id], onDelete: Cascade)
+}
+
+//////////////////////
+// LIVESTOCK
+//////////////////////
+
+model Livestock {
+  id       String @id @default(uuid())
+  surveyId String
+
+  animalType        String
+  owned             String
+  isIncomeGenerated Boolean
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+model IncomeFromLiveStock {
+  id       String @id @default(uuid())
+  surveyId String
+
+  source         String
+  isIncomeEarned Boolean @default(false)
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+model LivestockImportantOnFarm {
+  id       String @id @default(uuid())
+  surveyId String
+
+  source         String
+  isIncomeEarned Boolean @default(false)
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+model OffFarmIncome {
+  id       String @id @default(uuid())
+  surveyId String
+
+  source         String
+  isIncomeEarned Boolean @default(false)
 
   response Survey @relation(fields: [surveyId], references: [id])
 }
