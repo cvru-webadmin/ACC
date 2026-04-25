@@ -82,43 +82,167 @@ model Survey {
   topIncomeSource4 String?
   topIncomeSource5 String?
 
-  crop1Importance Int?
-  crop2Importance Int?
-  crop3Importance Int?
+  crop1Importance String?
+  crop2Importance String?
+  crop3Importance String?
 
   // SECTION 4 - ASSETS
-  roofMaterial        Int?
+  roofMaterial        String?
   hasThermos          Boolean?
-  floorMaterial       Int?
-  wallMaterial        Int?
-  cookingEnergy       Int?
+  floorMaterial       String?
+  wallMaterial        String?
+  cookingEnergy       String?
   hasRefrigerator     Boolean?
-  drinkingWaterSource Int?
-  hasPhone            Int?
+  drinkingWaterSource String?
+  hasPhone            String?
   hasStove            Boolean?
-  toiletType          Int?
-  hasTV               Int?
+  toiletType          String?
+  hasTV               String?
   hasStoneMill        Boolean?
   hasAlmirah          Boolean?
   hasIron             Boolean?
   hasRadio            Boolean?
   hasSewingMachine    Boolean?
-  hasVehicle          Int?
+  hasVehicle          String?
   hasMotorbike        Boolean?
 
+  ownedAssets    String?
   irrigationType String?
   hiresLabor     Boolean?
 
-  members                  HouseholdMember[]
-  crops                    Crop[]
-  cropProductions          CropProduction[]
-  processedProducts        ProcessedProduct[]
-  livestocks               Livestock[]
-  createdAt                DateTime                   @default(now())
-  updatedAt                DateTime                   @updatedAt
-  livestockProductsSold    IncomeFromLiveStock[]
-  livestockImportantOnFarm LivestockImportantOnFarm[]
-  offFarmIncome            OffFarmIncome[]
+  //SECTION 5
+  communityParticipation    Boolean?
+  hasLeadershipRole         Boolean?
+  processingCrop1           Boolean?
+  processingCrop1Activities String?
+  processingCrop2           Boolean?
+  processingCrop2Activities String?
+  processingCrop3           Boolean?
+  processingCrop3Activities String?
+  hasCreditAccess           Boolean?
+  leisureTimeRating         String?
+
+  // SECTION 6
+  lessPreferredFoodDays Int?
+  borrowFoodDays        Int?
+  limitPortionDays      Int?
+  limitAdultFoodDays    Int?
+  reduceMealsDays       Int?
+
+  foodInsufficiencyMonths Json?
+  foodAidMonths           Json?
+
+  cerealsDays       Int?
+  tubersDays        Int?
+  pulsesDays        Int?
+  vitaminAVegDays   Int?
+  leafyVegDays      Int?
+  otherVegDays      Int?
+  vitaminAFruitDays Int?
+  otherFruitDays    Int?
+  meatDays          Int?
+  organMeatDays     Int?
+  fishDays          Int?
+  dairyDays         Int?
+  eggDays           Int?
+  oilDays           Int?
+  sugarDays         Int?
+  spicesDays        Int?
+
+  crop1ConsumptionPattern Json?
+  crop2ConsumptionPattern Json?
+  crop3ConsumptionPattern Json?
+
+  // SECTION 7
+  introducedCrop      Boolean?
+  testingCrop         Boolean?
+  stoppedCrop         Boolean?
+  stoppedCropOnSeason Boolean?
+  expandedCrop        Boolean?
+  reducedCrop         Boolean?
+
+  //Reasons for new crop
+  stopUsingCropVariety Boolean?
+  newVariety           Boolean?
+  isHighYielding       Boolean?
+  isBetterQuality      Boolean?
+  isPreTreatedSeed     Boolean?
+  isShorterCycle       Boolean?
+  isLongerCycle        Boolean?
+  isDroughtTolerant    Boolean?
+  isFloodTolerant      Boolean?
+  isSalinityTolerant   Boolean?
+  isToxicityTolerant   Boolean?
+  isDiseaseResistant   Boolean?
+  isPestResistant      Boolean?
+
+  earlyPreparation         Boolean?
+  latePlanting             Boolean?
+  intercropping            Boolean?
+  changeInFarmingTimeOther String?
+
+  introducedIntercropping      Boolean?
+  introducedCropCover          Boolean?
+  introducedMulching           Boolean?
+  introducedRotations          Boolean?
+  introducedHedges             Boolean?
+  builtRidgesOrBunds           Boolean?
+  introducedTerraces           Boolean?
+  introducedStoneTerraces      Boolean?
+  introducedContourPloughing   Boolean?
+  improvedIrrigationEfficiency Boolean?
+  improvedDrainage             Boolean?
+  introducedMicroCatchments    Boolean?
+  tidalWaterControl            Boolean?
+  startedIrrigating            Boolean?
+  stoppedIrrigating            Boolean?
+
+  mechanizedFarming           Boolean?
+  increasedChemicalFertilizer Boolean?
+  startedManureCompost        Boolean?
+  stoppedManureCompost        Boolean?
+  increasedPesticideUse       Boolean?
+  integratedPestManagement    Boolean?
+  integratedCropManagement    Boolean?
+
+  introducedNewAnimals   Boolean?
+  testingNewAnimals      Boolean?
+  stoppedKeepingAnimals  Boolean?
+  introducedNewBreed     Boolean?
+  reducedHerdSize        Boolean?
+  increasedHerdSize      Boolean?
+  changedHerdComposition Boolean?
+  stallKeeping           Boolean?
+  fencing                Boolean?
+  cutAndCarry            Boolean?
+  growingFodderCrops     Boolean?
+  improvedPastures       Boolean?
+  fodderStorage          Boolean?
+  otherLivestockChanges  String? // "Other"
+
+  // Info received
+  manReceivedClimateInfo   Boolean?
+  womanReceivedClimateInfo Boolean?
+
+  // Source of info
+  manInfoSource   String?
+  womanInfoSource String?
+
+  // Open-ended answer
+  adaptationChangesLast3Years String?
+
+  roleInProduction RoleInProduction[]
+
+  members                 HouseholdMember[]
+  crops                   Crop[]
+  cropProductions         CropProduction[]
+  processedProducts       ProcessedProduct[]
+  livestocks              Livestock[]
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+  livestockIncomeFromOwn  IncomeFromLiveStock[]
+  livestockActivityOnFarm LivestockImportantOnFarm[]
+  offFarmIncome           OffFarmIncome[]
 }
 
 //////////////////////
@@ -190,24 +314,23 @@ model CropProduction {
   id       String @id @default(uuid())
   surveyId String
 
-  cropName   String
-  variety    String
-  areaSown   Float?
-  yieldKg    Float?
-  seedSource String?
-  valueChain ValueChain[]
+  cropName      String
+  cropVarieties CropVariety[]
 
   response Survey @relation(fields: [surveyId], references: [id])
 }
 
-model ValueChain {
-  id               String @id @default(uuid())
+model CropVariety {
+  id               String  @id @default(uuid())
   cropProductionId String
-
-  product        String?
-  salePercentage Float?
-  buyer          String?
-  pricePerKg     Float?
+  variety          String
+  areaSown         Float?
+  yieldKg          Float?
+  seedSource       String?
+  product          String?
+  salePercentage   Float?
+  buyer            String?
+  pricePerKg       Float?
 
   cropProduction CropProduction @relation(fields: [cropProductionId], references: [id], onDelete: Cascade)
 }
@@ -221,7 +344,7 @@ model Livestock {
   surveyId String
 
   animalType        String
-  owned             String
+  quantity          Float?
   isIncomeGenerated Boolean
 
   response Survey @relation(fields: [surveyId], references: [id])
@@ -255,4 +378,30 @@ model OffFarmIncome {
   isIncomeEarned Boolean @default(false)
 
   response Survey @relation(fields: [surveyId], references: [id])
+}
+
+//section 5
+model RoleInProduction {
+  id       String @id @default(uuid())
+  surveyId String
+
+  recivedCashFromCrop      String?
+  recivedCashFromLiveStock String?
+  howDeciedCropCash        String?
+  howDeciedLiveStockCash   String?
+
+  activityTrack ActivtiyTrack[]
+
+  response Survey @relation(fields: [surveyId], references: [id])
+}
+
+model ActivtiyTrack {
+  id                 String @id @default(uuid())
+  roleInProductionId String
+
+  activity        String
+  performanceWork String
+  task            String
+
+  role RoleInProduction @relation(fields: [roleInProductionId], references: [id], onDelete: Cascade)
 }
