@@ -30,6 +30,7 @@ model User {
 
 //---------------user model end---------------
 
+//---------------survey model-----------------
 model Survey {
   // Section 1
   id              String    @id @default(uuid())
@@ -380,7 +381,7 @@ model OffFarmIncome {
   response Survey @relation(fields: [surveyId], references: [id])
 }
 
-//section 5
+//section 5 sub table
 model RoleInProduction {
   id       String @id @default(uuid())
   surveyId String

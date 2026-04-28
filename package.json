@@ -11,7 +11,7 @@
     "start": "nest start",
     "dev": "nest start --watch",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev",
+    "migrate": "prisma migrate dev --name init",
     "push": "prisma db push",
     "studio": "prisma studio",
     "start:debug": "nest start --debug --watch",
