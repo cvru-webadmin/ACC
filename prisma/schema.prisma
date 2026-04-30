@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -106,8 +106,8 @@ model Survey {
   hasVehicle          String?
   hasMotorbike        Boolean?
 
-  ownedAssets    String?
-  irrigationType String?
+  ownedAssets    Json?
+  irrigationType Json?
   hiresLabor     Boolean?
 
   //SECTION 5
@@ -229,7 +229,7 @@ model Survey {
   womanInfoSource String?
 
   // Open-ended answer
-  adaptationChangesLast3Years String?
+  adaptationChangesLast3Years Json?
 
   roleInProduction RoleInProduction[]
 
@@ -270,6 +270,7 @@ model HouseholdMember {
   educationYears Int?
   isEnrolled     Boolean
   isIncomeEarner Boolean
+  isHead         Boolean
   farmMonths     Int?
 
   response Survey @relation(fields: [surveyId], references: [id])
