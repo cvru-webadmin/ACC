@@ -58,6 +58,10 @@ class HouseholdMemberDto {
   @IsBoolean()
   isIncomeEarner: boolean;
 
+  @ApiProperty()
+  @IsBoolean()
+  isHead: boolean;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
