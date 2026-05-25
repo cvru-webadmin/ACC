@@ -30,6 +30,7 @@ export class SurveyService {
           ? {
               create: cropProductions.map((prod) => ({
                 cropName: prod.cropName,
+                season: prod.season,
                 cropVarieties: {
                   create: prod.cropVarieties,
                 },

@@ -36,6 +36,9 @@ model Survey {
   userId          String
   district        String?
   village         String?
+  tehsil          String?
+  panchayat       String?
+  block           String?
   latitude        Float?
   longitude       Float?
   elevation       Float?
@@ -45,16 +48,13 @@ model Survey {
   dataEntryClerk  String?
 
   // Section 2
-  householdType      HouseholdType?
+  householdType      String?
   ethnicity          String?
   // 2.2 responding member
-  maleRespondentName String?
-  maleRespondentCode String?
-  maleRelationToHOH  Int?
+  respondentName String?
+  respondentCode String?
+  relationToHOH  Int?
 
-  femaleRespondentName String?
-  femaleRespondentCode String?
-  femaleRelationToHOH  Int?
 
   // SECTION 3 - LAND
   landUnit        String?
@@ -72,8 +72,8 @@ model Survey {
   pond          Float?
   rentedOutLand Float?
 
-  numberOfParcels        Int?
-  distanceBetweenParcels Float?
+  numberOfParcels        String?
+  distanceBetweenParcels String?
 
   // SECTION 4 - LIVESTOCK
   topIncomeSource1 String?
@@ -221,12 +221,10 @@ model Survey {
   otherLivestockChanges  String? // "Other"
 
   // Info received
-  manReceivedClimateInfo   Boolean?
-  womanReceivedClimateInfo Boolean?
+  receivedClimateInfo   Boolean?
 
   // Source of info
-  manInfoSource   String?
-  womanInfoSource String?
+  infoSource String?
 
   // Open-ended answer
   adaptationChangesLast3Years Json?
@@ -249,16 +247,6 @@ model Survey {
 // HOUSEHOLD MEMBERS
 //////////////////////
 
-enum HouseholdType {
-  MW
-  MH
-  WH
-  MA
-  FD
-  CH
-  OH
-}
-
 model HouseholdMember {
   id             String  @id @default(uuid())
   surveyId       String
@@ -266,7 +254,6 @@ model HouseholdMember {
   name           String?
   gender         String
   age            Int?
-  yearOfBirth    Int?
   educationYears Int?
   isEnrolled     Boolean
   isIncomeEarner Boolean
@@ -285,6 +272,7 @@ model Crop {
   surveyId String
 
   cropName          String
+  season            String?
   areaPlanted       Float?
   isConsumed        Boolean
   isIncomeGenerated Boolean
@@ -316,6 +304,7 @@ model CropProduction {
   surveyId String
 
   cropName      String
+  season        String?
   cropVarieties CropVariety[]
 
   response Survey @relation(fields: [surveyId], references: [id])

@@ -4,22 +4,13 @@ import {
   IsOptional,
   IsNumber,
   IsDateString,
-  IsEnum,
   IsBoolean,
   IsArray,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export enum HouseholdType {
-  MW = 'MW',
-  MH = 'MH',
-  WH = 'WH',
-  MA = 'MA',
-  FD = 'FD',
-  CH = 'CH',
-  OH = 'OH',
-}
+
 
 class HouseholdMemberDto {
   @ApiProperty()
@@ -40,10 +31,7 @@ class HouseholdMemberDto {
   @IsNumber()
   age?: number;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsNumber()
-  yearOfBirth?: number;
+
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -90,6 +78,11 @@ class CropDto {
   @IsOptional()
   @IsString()
   inputsUsed?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  season?: string;
 }
 
 class ProcessedProductDto {
@@ -147,6 +140,11 @@ class CropProductionDto {
   @ApiProperty()
   @IsString()
   cropName: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  season?: string;
 
   @ApiProperty({ type: [CropVarietyDto] })
   @IsArray()
@@ -240,6 +238,21 @@ export class CreateSurveyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @IsString()
+  tehsil?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  panchayat?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  block?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsNumber()
   latitude?: number;
 
@@ -273,10 +286,10 @@ export class CreateSurveyDto {
   @IsString()
   dataEntryClerk?: string;
 
-  @ApiPropertyOptional({ enum: HouseholdType })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(HouseholdType)
-  householdType?: HouseholdType;
+  @IsString()
+  householdType?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -286,32 +299,17 @@ export class CreateSurveyDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  maleRespondentName?: string;
+  respondentName?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  maleRespondentCode?: string;
+  respondentCode?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
-  maleRelationToHOH?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  femaleRespondentName?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  femaleRespondentCode?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsNumber()
-  femaleRelationToHOH?: number;
+  relationToHOH?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -380,13 +378,13 @@ export class CreateSurveyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber()
-  numberOfParcels?: number;
+  @IsString()
+  numberOfParcels?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber()
-  distanceBetweenParcels?: number;
+  @IsString()
+  distanceBetweenParcels?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -1006,22 +1004,12 @@ export class CreateSurveyDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  manReceivedClimateInfo?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  womanReceivedClimateInfo?: boolean;
+  receivedClimateInfo?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  manInfoSource?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  womanInfoSource?: string;
+  infoSource?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
