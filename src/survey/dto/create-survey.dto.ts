@@ -299,17 +299,32 @@ export class CreateSurveyDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  respondentName?: string;
+  femaleRespondentName?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  respondentCode?: string;
+  femaleRespondentCode?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber()
-  relationToHOH?: number;
+  @IsString()
+  femaleRelationToHOH?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  maleRespondentName?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  maleRespondentCode?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  maleRelationToHOH?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

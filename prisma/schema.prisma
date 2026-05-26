@@ -50,10 +50,16 @@ model Survey {
   // Section 2
   householdType      String?
   ethnicity          String?
+  
   // 2.2 responding member
-  respondentName String?
-  respondentCode String?
-  relationToHOH  Int?
+  femaleRespondentName String?
+  femaleRespondentCode String?
+  femaleRelationToHOH  String?
+
+  maleRespondentName String?
+  maleRespondentCode String?
+  maleRelationToHOH  String?
+
 
 
   // SECTION 3 - LAND
