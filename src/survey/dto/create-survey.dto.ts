@@ -184,35 +184,31 @@ class ActivityTrackDto {
   @IsString()
   activity: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  performanceWork: string;
+  performerMemberCode?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  task: string;
+  deciderMemberCode?: string;
 }
 
 class RoleInProductionDto {
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty()
   @IsString()
-  recivedCashFromCrop?: string;
+  targetCrop: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  recivedCashFromLiveStock?: string;
+  cashReceiverMemberCode?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  howDeciedCropCash?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  howDeciedLiveStockCash?: string;
+  cashDecisionMakerMemberCode?: string;
 
   @ApiProperty({ type: [ActivityTrackDto] })
   @IsArray()

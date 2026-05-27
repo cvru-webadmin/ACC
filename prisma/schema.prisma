@@ -104,9 +104,11 @@ model Survey {
   hasStove            Boolean?
   toiletType          String?
   hasTV               String?
+  hasDVD              Boolean?
   hasStoneMill        Boolean?
   hasAlmirah          Boolean?
   hasIron             Boolean?
+  hasElectircIron     Boolean?
   hasRadio            Boolean?
   hasSewingMachine    Boolean?
   hasVehicle          String?
@@ -381,10 +383,9 @@ model RoleInProduction {
   id       String @id @default(uuid())
   surveyId String
 
-  recivedCashFromCrop      String?
-  recivedCashFromLiveStock String?
-  howDeciedCropCash        String?
-  howDeciedLiveStockCash   String?
+  targetCrop String
+  cashReceiverMemberCode String?
+  cashDecisionMakerMemberCode String?
 
   activityTrack ActivtiyTrack[]
 
@@ -396,8 +397,8 @@ model ActivtiyTrack {
   roleInProductionId String
 
   activity        String
-  performanceWork String
-  task            String
+  performerMemberCode String?
+  deciderMemberCode String?
 
   role RoleInProduction @relation(fields: [roleInProductionId], references: [id], onDelete: Cascade)
 }
