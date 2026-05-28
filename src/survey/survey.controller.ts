@@ -38,7 +38,6 @@ class PaginatedSurveyResponseDto {
   meta: SurveyMetaDto;
 }
 
-
 @ApiTags('Survey')
 @Controller('survey')
 export class SurveyController {
@@ -63,10 +62,13 @@ export class SurveyController {
     return this.surveyService.findAll(page ? +page : 1, limit ? +limit : 10);
   }
 
-
   @Get(':id')
   @ApiOperation({ summary: 'Get a survey by ID' })
-  @ApiResponse({ status: 200, description: 'The survey has been successfully retrieved.', type: CreateSurveyDto })
+  @ApiResponse({
+    status: 200,
+    description: 'The survey has been successfully retrieved.',
+    type: CreateSurveyDto,
+  })
   @ApiResponse({ status: 404, description: 'Survey not found.' })
   findOne(@Param('id') id: string) {
     return this.surveyService.findOne(id);
@@ -74,7 +76,10 @@ export class SurveyController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a survey' })
-  @ApiResponse({ status: 200, description: 'The survey has been successfully updated.' })
+  @ApiResponse({
+    status: 200,
+    description: 'The survey has been successfully updated.',
+  })
   @ApiResponse({ status: 404, description: 'Survey not found.' })
   update(@Param('id') id: string, @Body() updateSurveyDto: UpdateSurveyDto) {
     return this.surveyService.update(id, updateSurveyDto);
@@ -82,10 +87,12 @@ export class SurveyController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a survey' })
-  @ApiResponse({ status: 200, description: 'The survey has been successfully deleted.' })
+  @ApiResponse({
+    status: 200,
+    description: 'The survey has been successfully deleted.',
+  })
   @ApiResponse({ status: 404, description: 'Survey not found.' })
   remove(@Param('id') id: string) {
     return this.surveyService.remove(id);
   }
 }
-

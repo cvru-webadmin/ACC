@@ -10,8 +10,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-
-
 class HouseholdMemberDto {
   @ApiProperty()
   @IsString()
@@ -30,8 +28,6 @@ class HouseholdMemberDto {
   @IsOptional()
   @IsNumber()
   age?: number;
-
-
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -495,6 +491,11 @@ export class CreateSurveyDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
+  hasDVD?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
   hasStoneMill?: boolean;
 
   @ApiPropertyOptional()
@@ -506,6 +507,11 @@ export class CreateSurveyDto {
   @IsOptional()
   @IsBoolean()
   hasIron?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  hasElectircIron?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -529,13 +535,11 @@ export class CreateSurveyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  ownedAssets?: string;
+  ownedAssets?: any;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  irrigationType?: string;
+  irrigationType?: any;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -1024,8 +1028,7 @@ export class CreateSurveyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  adaptationChangesLast3Years?: string;
+  adaptationChangesLast3Years?: any;
 
   // Relations
   @ApiProperty({ type: [HouseholdMemberDto] })

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UserRole } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,7 +15,13 @@ import { Roles } from 'src/auth/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { LoginDto } from './dto/login.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiBody,
+} from '@nestjs/swagger';
 
 @ApiTags('User Management')
 @Controller('user')
@@ -15,10 +30,13 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new (Super Admin)' })
-  @ApiResponse({ status: 201, description: 'Super Admin successfully created.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Super Admin successfully created.',
+  })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   create(@Body() createUserDto: CreateUserDto) {
-    if(createUserDto.role === 'AGENT') {
+    if (createUserDto.role === 'AGENT') {
       throw new Error('AGENT role is not allowed');
     }
     createUserDto.role = UserRole.SUPER_ADMIN;
@@ -41,7 +59,7 @@ export class UserController {
   @ApiResponse({ status: 201, description: 'Agent successfully created.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   createAgent(@Body() createUserDto: CreateUserDto) {
-    if(createUserDto.role === 'SUPER_ADMIN') {
+    if (createUserDto.role === 'SUPER_ADMIN') {
       throw new Error('SUPER_ADMIN role is not allowed');
     }
     createUserDto.role = UserRole.AGENT;

@@ -44,10 +44,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
           code = 'DATABASE_ERROR';
       }
     } else if (
-
-    /**
-     * 2️⃣ Nest HTTP Exceptions
-     */
+      /**
+       * 2️⃣ Nest HTTP Exceptions
+       */
       exception instanceof HttpException &&
       exception.getStatus() === HttpStatus.BAD_REQUEST
     ) {
