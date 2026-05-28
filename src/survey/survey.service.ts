@@ -21,9 +21,40 @@ export class SurveyService {
       ...surveyData
     } = createSurveyDto;
 
+    // Auto-generate a unique Survey Number (SRV-YYYYMMDD-XXXX)
+    let interviewDate = createSurveyDto.interviewDate
+      ? new Date(createSurveyDto.interviewDate)
+      : new Date();
+
+    if (isNaN(interviewDate.getTime())) {
+      interviewDate = new Date();
+    }
+
+    const startOfDay = new Date(interviewDate);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(interviewDate);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
+    const countOnDay = await this.prisma.survey.count({
+      where: {
+        interviewDate: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+    });
+
+    const year = interviewDate.getUTCFullYear();
+    const month = String(interviewDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(interviewDate.getUTCDate()).padStart(2, '0');
+    const dateStr = `${year}${month}${day}`;
+    const generatedSurveyNo = `SRV-${dateStr}-${String(countOnDay + 1).padStart(4, '0')}`;
+
     return this.prisma.survey.create({
       data: {
         ...surveyData,
+        surveyNo: generatedSurveyNo,
         members: members ? { create: members } : undefined,
         crops: crops ? { create: crops } : undefined,
         cropProductions: cropProductions
