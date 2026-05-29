@@ -103,8 +103,8 @@ model Survey {
   hasPhone            String?
   hasStove            Boolean?
   toiletType          String?
-  hasTV               String?
-  hasDVD              Boolean?
+  hasTV               Boolean?
+  hasDVD              String?
   hasStoneMill        Boolean?
   hasAlmirah          Boolean?
   hasIron             Boolean?

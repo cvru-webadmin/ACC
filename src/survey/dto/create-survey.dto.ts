@@ -485,13 +485,13 @@ export class CreateSurveyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  hasTV?: string;
+  @IsBoolean()
+  hasTV?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsBoolean()
-  hasDVD?: boolean;
+  @IsString()
+  hasDVD?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
